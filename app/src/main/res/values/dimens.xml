@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="defaultPadding">5dp</dimen>
+    <dimen name="defaultMargin">5dp</dimen>
+    <dimen name="event_image_width">50dp</dimen>
+    <dimen name="event_image_height">50dp</dimen>
+</resources>
