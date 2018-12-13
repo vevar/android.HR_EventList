@@ -1,10 +1,10 @@
 package com.alxminyaev.eventlist.feature.feature.eventtable.data.datasource
 
-import com.alxminyaev.eventlist.feature.feature.eventtable.domain.model.Event
-import io.reactivex.Observer
+import com.alxminyaev.eventlist.feature.feature.eventtable.data.dto.TheEventCard
+import io.reactivex.Observable
 
 interface EventTableDataSource {
 
-    fun getEventsCards(observer: Observer<List<Event>>)
+    fun getEventsCards(): Observable<List<TheEventCard>>
 
 }

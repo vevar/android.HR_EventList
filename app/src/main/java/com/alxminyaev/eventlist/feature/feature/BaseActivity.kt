@@ -22,8 +22,8 @@ abstract class BaseActivity<T : MvpView> : AppCompatActivity() {
         presenter.attachView(getMvpView())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         presenter.detachView()
     }
 }

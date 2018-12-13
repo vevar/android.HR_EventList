@@ -9,12 +9,13 @@ import io.reactivex.disposables.Disposable
 class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPresenter<EventTableView>(),
     Observer<List<Event>> {
 
+    private lateinit var loaderEventsDiposable : Disposable
+
     override fun onComplete() {
-        TODO("not implemented")
     }
 
-    override fun onSubscribe(d: Disposable) {
-        TODO("not implemented")
+    override fun onSubscribe(disposable: Disposable) {
+        loaderEventsDiposable = disposable
     }
 
     override fun onNext(t: List<Event>) {
@@ -32,6 +33,8 @@ class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPre
 
     private fun loadEventTable() {
         view?.showProgressBar()
-        interactor.loadEvents(this)
+        interactor.loadEvents()
+            .subscribe(this)
+
     }
 }
