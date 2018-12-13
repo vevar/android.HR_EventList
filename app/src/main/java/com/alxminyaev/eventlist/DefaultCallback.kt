@@ -1,7 +1,7 @@
 package com.alxminyaev.eventlist
 
-import com.alxminyaev.eventlist.feature.network.Carry
-import com.alxminyaev.eventlist.feature.network.Wrapper
+import com.alxminyaev.eventlist.network.Carry
+import com.alxminyaev.eventlist.network.Wrapper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

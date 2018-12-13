@@ -14,7 +14,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name="com.alxminyaev.eventlist.feature.feature.eventtable.presentation.EventTableActivity"
+                android:name="com.alxminyaev.eventlist.feature.eventtable.presentation.EventTableActivity"
                 android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -1,0 +1,20 @@
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity
+
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+
+@Entity(tableName = CityEntity.TABLE_NAME)
+data class CityEntity(
+    @PrimaryKey
+    val uid: Int,
+
+    val nameRus: String,
+    val nameEng: String,
+    val icon: String,
+    val isActive: Int
+) {
+    companion object {
+        const val TABLE_NAME: String = "city"
+    }
+}
