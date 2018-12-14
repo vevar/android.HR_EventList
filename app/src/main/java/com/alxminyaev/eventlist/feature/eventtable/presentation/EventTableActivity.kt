@@ -3,12 +3,11 @@ package com.alxminyaev.eventlist.feature.eventtable.presentation
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.alxminyaev.eventlist.R
 import com.alxminyaev.eventlist.feature.BaseActivity
 import com.alxminyaev.eventlist.feature.MvpPresenter
-import com.alxminyaev.eventlist.feature.eventtable.domain.model.Event
+import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
 
 class EventTableActivity : BaseActivity<EventTableView>(), EventTableView {
 
@@ -51,7 +50,7 @@ class EventTableActivity : BaseActivity<EventTableView>(), EventTableView {
         progressBar.visibility = ProgressBar.GONE
     }
 
-    override fun showEventTable(result: List<Event>) {
+    override fun showEventTable(result: List<EventModel>) {
         recyclerViewAdapter.setListEvents(result)
     }
 

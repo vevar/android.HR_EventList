@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.alxminyaev.eventlist.R
-import com.alxminyaev.eventlist.feature.eventtable.domain.model.Event
+import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
 
 class EventTableAdapter(context: Context) : RecyclerView.Adapter<EventTableAdapter.EventHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val listEvents: MutableList<Event> = mutableListOf()
+    private val listEvents: MutableList<EventModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHolder {
         val view = inflater.inflate(R.layout.event_card, parent, false)
@@ -27,7 +27,7 @@ class EventTableAdapter(context: Context) : RecyclerView.Adapter<EventTableAdapt
         holder.bind(listEvents[position])
     }
 
-    fun setListEvents(events: List<Event>) {
+    fun setListEvents(events: List<EventModel>) {
         listEvents.clear()
         listEvents.addAll(events)
         notifyDataSetChanged()
@@ -38,7 +38,7 @@ class EventTableAdapter(context: Context) : RecyclerView.Adapter<EventTableAdapt
         private var dateStart = view.findViewById<TextView>(R.id.event_date)
 
 
-        fun bind(event: Event) {
+        fun bind(event: EventModel) {
             title.text = event.title
             dateStart.text = event.date.start.toString()
         }

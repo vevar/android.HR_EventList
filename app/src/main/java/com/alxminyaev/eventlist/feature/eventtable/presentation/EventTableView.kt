@@ -1,7 +1,7 @@
 package com.alxminyaev.eventlist.feature.eventtable.presentation
 
 import com.alxminyaev.eventlist.feature.MvpView
-import com.alxminyaev.eventlist.feature.eventtable.domain.model.Event
+import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
 
 interface EventTableView : MvpView {
 
@@ -9,7 +9,7 @@ interface EventTableView : MvpView {
 
     fun hideProgressBar()
 
-    fun showEventTable(result: List<Event>)
+    fun showEventTable(result: List<EventModel>)
 
     fun showError()
 

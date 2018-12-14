@@ -1,9 +1,11 @@
 package com.alxminyaev.eventlist.feature.eventtable.domain.model
 
-data class Event(
+data class EventModel(
     val id: Int,
     val title: String,
+    val cites : List<CityModel>,
     val description: String,
-    val date: DateEvent,
-    val cardImage: String
+    val date: DateEventModel,
+    val cardImage: String,
+    val status : Int
 )

@@ -1,10 +1,11 @@
 package com.alxminyaev.eventlist.feature.eventtable.data.datasource
 
-import com.alxminyaev.eventlist.feature.eventtable.data.dto.TheEventCard
-import io.reactivex.Observable
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.dto.TheEventCard
+import io.reactivex.Single
 
 interface EventTableDataSource {
 
-    fun getEventsCards(): Observable<List<TheEventCard>>
+    fun getEventsCards(): Single<List<TheEventCard>>
 
+    fun saveAll(list: List<TheEventCard>)
 }

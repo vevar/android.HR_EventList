@@ -2,9 +2,7 @@ package com.alxminyaev.eventlist.feature.eventtable.domain.model
 
 import java.util.*
 
-class DateEvent (
+data class DateEventModel (
     val start : Date,
     val end : Date
-){
-
-}
+)

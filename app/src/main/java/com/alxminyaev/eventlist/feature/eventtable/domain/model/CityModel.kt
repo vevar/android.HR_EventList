@@ -1,5 +1,6 @@
 package com.alxminyaev.eventlist.feature.eventtable.domain.model
 
-class City {
-
-}
+data class CityModel(
+    val id: Int,
+    val nameRus: String
+)

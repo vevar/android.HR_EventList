@@ -4,6 +4,7 @@ import android.content.Context
 import com.alxminyaev.eventlist.App
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.EventTableApi
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSource
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSourceLocalImpl
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSourceRemoteImpl
 import com.alxminyaev.eventlist.feature.eventtable.data.repository.EventTableRepository
 import com.alxminyaev.eventlist.feature.eventtable.data.repository.EventTableRepositoryImpl
@@ -18,10 +19,18 @@ class PresenterFactory {
                 .getRetrofit()
                 .create(EventTableApi::class.java)
 
-            val dataSource: EventTableDataSource =
+
+            val dataSourceRemote: EventTableDataSource =
                 EventTableDataSourceRemoteImpl(api)
+            val dataSourceLocal: EventTableDataSource =
+                EventTableDataSourceLocalImpl(
+                    App.getAppDataBase(context).getEventDao(),
+                    App.getAppDataBase(context).getCityDao()
+                )
+
             val repository: EventTableRepository =
-                EventTableRepositoryImpl(dataSource)
+                EventTableRepositoryImpl(dataSourceRemote, dataSourceLocal)
+
             val interactor: EventTableInteractor = EventTableInteractorImpl(repository)
 
             return EventTablePresenter(interactor)
