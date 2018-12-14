@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 
 class EventTableDataSourceRemoteImpl(private val api: EventTableApi) : EventTableDataSource {
 
-    override fun saveAll(list: List<TheEventCard>) {
+    override fun saveAll(single: Single<List<TheEventCard>>) {
     }
 
     override fun getEventsCards(): Single<List<TheEventCard>> {

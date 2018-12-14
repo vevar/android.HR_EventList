@@ -9,5 +9,5 @@ interface EventTableRepository {
 
     fun loadEventsFromLocal(): Single<List<EventModel>>
 
-    fun saveAllToLocal(list: List<EventModel>)
+    fun saveAllToLocal(single: Single<List<EventModel>>)
 }

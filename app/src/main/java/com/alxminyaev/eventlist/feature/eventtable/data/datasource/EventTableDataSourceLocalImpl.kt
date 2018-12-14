@@ -6,22 +6,32 @@ import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.dao.
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity.CityEntity
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity.EventEntity
 import io.reactivex.MaybeObserver
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val cityDao: CityDao) :
     EventTableDataSource {
 
-    override fun saveAll(list: List<TheEventCard>) {
-        eventDao.insertAll(list.map {
-            val cites: List<CityEntity> = it.cities.map { city ->
-                convertFrom(city)
+    override fun saveAll(single: Single<List<TheEventCard>>) {
+        val disposable = single.map { list ->
+            list.map { theEvent ->
+                val cites = theEvent.cities.map { theCity ->
+                    convertCityFrom(theCity)
+                }
+                Observable.fromIterable(cites)
+                    .toList()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(Consumer { cityDao.saveAll(it) })
+
+                convertEventFrom(theEvent, cites.map { it.uid })
             }
-            cityDao.saveAll(cites)
-            convertFrom(it, cites.map { it.uid })
-        })
+        }
+            .subscribeOn(Schedulers.io())
+            .subscribe(Consumer { eventDao.insertAll(it) })
     }
 
     override fun getEventsCards(): Single<List<TheEventCard>> {
@@ -49,13 +59,13 @@ class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val 
 
                         })
                     }
-                    convertFrom(it, cites)
+                    convertEventFrom(it, cites)
                 }
             }
 
     }
 
-    private fun convertFrom(theEventCard: TheEventCard, listIDsCites: List<Int>): EventEntity {
+    private fun convertEventFrom(theEventCard: TheEventCard, listIDsCites: List<Int>): EventEntity {
         return EventEntity(
             theEventCard.id,
             theEventCard.title,
@@ -67,15 +77,15 @@ class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val 
         )
     }
 
-    private fun convertFrom(city: TheEventCard.City): CityEntity {
+    private fun convertCityFrom(city: TheEventCard.City): CityEntity {
         return CityEntity(
             city.id,
             city.nameRus
         )
     }
 
-    private fun convertFrom(eventEntity: EventEntity, citesEntity: List<CityEntity>): TheEventCard {
-        val cites = citesEntity.map { convertFrom(it) }
+    private fun convertEventFrom(eventEntity: EventEntity, citesEntity: List<CityEntity>): TheEventCard {
+        val cites = citesEntity.map { convertCityFrom(it) }
 
         return TheEventCard(
             eventEntity.uid,
@@ -88,7 +98,7 @@ class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val 
         )
     }
 
-    private fun convertFrom(cityEntity: CityEntity): TheEventCard.City {
+    private fun convertCityFrom(cityEntity: CityEntity): TheEventCard.City {
         return TheEventCard.City(
             cityEntity.uid,
             cityEntity.nameRus

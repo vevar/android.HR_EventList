@@ -14,24 +14,18 @@ class EventTableRepositoryImpl(
     private val dataSourceLocal: EventTableDataSource
 ) : EventTableRepository {
 
-    override fun saveAllToLocal(list: List<EventModel>) {
-//        dataSourceLocal.saveAll(list.map { eventModel ->
-////            TheEventCard(
-////                eventModel.id,
-////                eventModel.title,
-////                eventModel.cites,
-////                eventModel.description,
-////                eventModel.date,
-////                eventModel.cardImage,
-////                eventModel.status
-////            )
-//        })
+    override fun saveAllToLocal(single: Single<List<EventModel>>) {
+        dataSourceLocal.saveAll(single.map { list ->
+            list.map {
+                convertEventFrom(it)
+            }
+        })
     }
 
     override fun loadEventsFromLocal(): Single<List<EventModel>> {
         return dataSourceLocal.getEventsCards().map { list ->
             list.map {
-                convertFrom(it)
+                convertEventFrom(it)
             }
         }
     }
@@ -39,28 +33,58 @@ class EventTableRepositoryImpl(
     override fun loadEventsFromRemote(): Single<List<EventModel>> {
         return dataSourceRemote.getEventsCards().map { list ->
             list.map {
-                convertFrom(it)
+                convertEventFrom(it)
             }
         }
 
     }
 
-    private fun convertFrom(theEventCard: TheEventCard): EventModel {
+    private fun convertDateFrom(dateEventModel: DateEventModel): TheEventCard.DateEvent {
+        return TheEventCard.DateEvent(
+            dateEventModel.start.toString(),
+            dateEventModel.end.toString()
+        )
+    }
+
+    private fun convertDateFrom(dateEvent: TheEventCard.DateEvent): DateEventModel {
+        return DateEventModel(
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(dateEvent.start),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(dateEvent.end)
+        )
+    }
+
+    private fun convertCityFrom(cityModel: CityModel): TheEventCard.City {
+        return TheEventCard.City(
+            cityModel.id,
+            cityModel.nameRus
+        )
+    }
+
+    private fun convertEventFrom(eventModel: EventModel): TheEventCard {
+        return TheEventCard(
+            eventModel.id,
+            eventModel.title,
+            eventModel.cites.map { convertCityFrom(it) },
+            eventModel.description,
+            convertDateFrom(eventModel.date),
+            eventModel.cardImage,
+            eventModel.status
+        )
+    }
+
+    private fun convertEventFrom(theEventCard: TheEventCard): EventModel {
         return EventModel(
             theEventCard.id,
             theEventCard.title,
-            theEventCard.cities.map { convertFrom(it) },
+            theEventCard.cities.map { convertCityFrom(it) },
             theEventCard.description,
-            DateEventModel(
-                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(theEventCard.date.start),
-                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(theEventCard.date.end)
-            ),
+            convertDateFrom(theEventCard.date),
             theEventCard.cardImage,
             theEventCard.status
         )
     }
 
-    private fun convertFrom(city: TheEventCard.City): CityModel {
+    private fun convertCityFrom(city: TheEventCard.City): CityModel {
         return CityModel(
             city.id,
             city.nameRus
