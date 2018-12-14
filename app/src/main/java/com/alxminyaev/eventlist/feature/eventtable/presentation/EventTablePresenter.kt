@@ -4,12 +4,13 @@ import com.alxminyaev.eventlist.feature.MvpPresenter
 import com.alxminyaev.eventlist.feature.eventtable.domain.EventTableInteractor
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
 import io.reactivex.Observer
-import io.reactivex.Single
-import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 
 class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPresenter<EventTableView>(),
     Observer<List<EventModel>> {
+
+    private lateinit var loaderEventsDisposable: Disposable
+
     override fun onComplete() {
         loaderEventsDisposable.dispose()
     }
@@ -19,7 +20,6 @@ class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPre
         view?.hideProgressBar()
     }
 
-    private lateinit var loaderEventsDisposable: Disposable
 
     override fun onSubscribe(disposable: Disposable) {
         loaderEventsDisposable = disposable
@@ -27,7 +27,6 @@ class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPre
 
 
     override fun onError(e: Throwable) {
-        TODO("not implemented")
     }
 
     override fun onViewReady() {

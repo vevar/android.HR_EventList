@@ -40,16 +40,18 @@ class EventTableRepositoryImpl(
     }
 
     private fun convertDateFrom(dateEventModel: DateEventModel): TheEventCard.DateEvent {
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         return TheEventCard.DateEvent(
-            dateEventModel.start.toString(),
-            dateEventModel.end.toString()
+            simpleDateFormat.format(dateEventModel.start),
+            simpleDateFormat.format(dateEventModel.end)
         )
     }
 
     private fun convertDateFrom(dateEvent: TheEventCard.DateEvent): DateEventModel {
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         return DateEventModel(
-            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(dateEvent.start),
-            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(dateEvent.end)
+            simpleDateFormat.parse(dateEvent.start),
+            simpleDateFormat.parse(dateEvent.end)
         )
     }
 
