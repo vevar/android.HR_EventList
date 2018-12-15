@@ -1,10 +1,10 @@
-package com.alxminyaev.eventlist.feature.eventtable.data.datasource
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.local
 
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.dto.TheEventCard
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.dao.CityDao
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.dao.EventDao
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity.CityEntity
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity.EventEntity
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.dto.TheEventCard
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.dao.CityDao
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.dao.EventDao
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.entity.CityEntity
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.entity.EventEntity
 import io.reactivex.MaybeObserver
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -14,7 +14,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val cityDao: CityDao) :
-    EventTableDataSource {
+    EventTableLocalDataSource {
 
     override fun saveAll(single: Single<List<TheEventCard>>) {
         val disposable = single.map { list ->

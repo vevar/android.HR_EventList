@@ -1,4 +1,4 @@
-package com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.dto
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.dto
 
 data class TheEventCard(
     val id: Int,

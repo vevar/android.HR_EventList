@@ -1,4 +1,4 @@
-package com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.entity
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

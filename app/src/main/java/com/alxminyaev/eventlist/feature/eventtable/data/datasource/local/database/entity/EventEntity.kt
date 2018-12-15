@@ -1,7 +1,6 @@
-package com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.entity
 
 import android.arch.persistence.room.*
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.dto.TheEventCard
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

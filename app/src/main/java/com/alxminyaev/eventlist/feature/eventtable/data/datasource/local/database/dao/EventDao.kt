@@ -1,10 +1,10 @@
-package com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.dao
+package com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.database.entity.EventEntity
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.database.entity.EventEntity
 import io.reactivex.Single
 
 

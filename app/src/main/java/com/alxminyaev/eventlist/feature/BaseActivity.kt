@@ -3,7 +3,7 @@ package com.alxminyaev.eventlist.feature
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-abstract class BaseActivity<T : MvpView> : AppCompatActivity() {
+abstract class BaseActivity<T : MvpView> : AppCompatActivity()  {
 
     protected abstract fun getPresenter(): MvpPresenter<T>
 

@@ -8,12 +8,12 @@ import com.alxminyaev.eventlist.network.RetrofitProvider
 
 class App : Application() {
 
-    private lateinit var retrofitProvider: RetrofitProvider
+    lateinit var retrofitProvider: RetrofitProvider
 
-    private lateinit var dataBase: AppDataBase
+    lateinit var dataBase: AppDataBase
 
     companion object {
-        private fun getApp(context: Context): App {
+        fun getApp(context: Context): App {
             return context.applicationContext as App
         }
 
@@ -29,6 +29,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         retrofitProvider = RetrofitProvider()
 
         dataBase = Room.databaseBuilder(
@@ -37,4 +38,5 @@ class App : Application() {
             AppDataBase.DATABASE_NAME
         ).build()
     }
+
 }

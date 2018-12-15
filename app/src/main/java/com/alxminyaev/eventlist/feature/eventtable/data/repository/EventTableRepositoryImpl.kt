@@ -1,7 +1,8 @@
 package com.alxminyaev.eventlist.feature.eventtable.data.repository
 
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSource
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.dto.TheEventCard
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.EventTableLocalDataSource
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.dto.TheEventCard
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.EventTableRemoteDataSource
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.CityModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.DateEventModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
@@ -10,8 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EventTableRepositoryImpl(
-    private val dataSourceRemote: EventTableDataSource,
-    private val dataSourceLocal: EventTableDataSource
+    private val dataSourceRemote: EventTableRemoteDataSource,
+    private val dataSourceLocal: EventTableLocalDataSource
 ) : EventTableRepository {
 
     override fun saveAllToLocal(single: Single<List<EventModel>>) {

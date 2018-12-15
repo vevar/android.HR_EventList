@@ -2,10 +2,11 @@ package com.alxminyaev.eventlist.feature.eventtable.presentation
 
 import android.content.Context
 import com.alxminyaev.eventlist.App
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.api.EventTableApi
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSource
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSourceLocalImpl
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.EventTableDataSourceRemoteImpl
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.EventTableApi
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.EventTableLocalDataSource
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.EventTableDataSourceLocalImpl
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.EventTableDataSourceRemoteImpl
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.EventTableRemoteDataSource
 import com.alxminyaev.eventlist.feature.eventtable.data.repository.EventTableRepository
 import com.alxminyaev.eventlist.feature.eventtable.data.repository.EventTableRepositoryImpl
 import com.alxminyaev.eventlist.feature.eventtable.domain.EventTableInteractor
@@ -20,9 +21,9 @@ class PresenterFactory {
                 .create(EventTableApi::class.java)
 
 
-            val dataSourceRemote: EventTableDataSource =
+            val dataSourceRemote: EventTableRemoteDataSource =
                 EventTableDataSourceRemoteImpl(api)
-            val dataSourceLocal: EventTableDataSource =
+            val dataSourceLocal: EventTableLocalDataSource =
                 EventTableDataSourceLocalImpl(
                     App.getAppDataBase(context).getEventDao(),
                     App.getAppDataBase(context).getCityDao()
