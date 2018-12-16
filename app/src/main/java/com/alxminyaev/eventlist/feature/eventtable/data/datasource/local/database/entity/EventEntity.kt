@@ -6,19 +6,14 @@ import com.google.gson.reflect.TypeToken
 
 
 @Entity(
-    tableName = EventEntity.TABLE_NAME,
-    foreignKeys = [ForeignKey(
-        entity = CityEntity::class,
-        parentColumns = arrayOf("uid"),
-        childColumns = arrayOf("cites_id")
-    )]
+    tableName = EventEntity.TABLE_NAME
 )
 @TypeConverters(EventEntity.Converter::class)
 data class EventEntity(
     @PrimaryKey
     val uid: Int,
     val title: String,
-    @ColumnInfo(name = "cites_id") val citesId: List<Int>,
+    @ColumnInfo(name = EventEntity.CITIES_ID) val citesId: List<Int>,
     val description: String,
     @Embedded val date: DateEvent,
     val cardImage: String,
@@ -31,6 +26,7 @@ data class EventEntity(
 
     companion object {
         const val TABLE_NAME: String = "event"
+        const val CITIES_ID: String = "cites_id"
     }
 
     class Converter {

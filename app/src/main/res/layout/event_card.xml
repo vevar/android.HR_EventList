@@ -5,18 +5,20 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/defaultPadding"
+
         android:layout_margin="@dimen/defaultMargin">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/defaultPadding">
         <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_margin="@dimen/defaultMargin"
+                android:src="@drawable/event_default"
                 android:contentDescription=""
-                tools:srcCompat="@mipmap/ic_launcher"
+                tools:srcCompat="@drawable/event_default"
                 tools:ignore="ContentDescription"/>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -27,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@android:color/holo_red_dark"
+                    android:textColor="@color/colorPrimaryDark"
                     tools:text="29 января 2018г"/>
             <TextView
                     android:id="@+id/event_title"

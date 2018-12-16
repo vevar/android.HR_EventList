@@ -1,8 +1,8 @@
 package com.alxminyaev.eventlist.feature.eventtable.data.repository
 
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.local.EventTableLocalDataSource
-import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.dto.TheEventCard
 import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.EventTableRemoteDataSource
+import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.api.dto.TheEventCard
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.CityModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.DateEventModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
@@ -18,8 +18,8 @@ class EventTableRepositoryImpl(
 
     override fun loadEvents(): Observable<List<EventModel>> {
         return dataSourceLocal.getEventsCards()
-            .mergeWith(getFromRemote())
-            .map{ list ->
+            .mergeWith (getFromRemote())
+            .map { list ->
                 list.map {
                     convertEventFrom(it)
                 }
@@ -34,31 +34,6 @@ class EventTableRepositoryImpl(
             }
     }
 
-    override fun saveAllToLocal(single: Single<List<EventModel>>) {
-        dataSourceLocal.saveAll(single.map { list ->
-            list.map {
-                convertEventFrom(it)
-            }
-        })
-    }
-
-    override fun loadEventsFromLocal(): Single<List<EventModel>> {
-        return dataSourceLocal.getEventsCards().map { list ->
-            list.map {
-                convertEventFrom(it)
-            }
-        }
-    }
-
-    override fun loadEventsFromRemote(): Single<List<EventModel>> {
-        return dataSourceRemote.getEventsCards().map { list ->
-            list.map {
-                convertEventFrom(it)
-            }
-        }
-
-    }
-
     private fun convertDateFrom(dateEventModel: DateEventModel): TheEventCard.DateEvent {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         return TheEventCard.DateEvent(
@@ -69,9 +44,13 @@ class EventTableRepositoryImpl(
 
     private fun convertDateFrom(dateEvent: TheEventCard.DateEvent): DateEventModel {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+        val calendarStart = Calendar.getInstance()
+        val calendarEnd = Calendar.getInstance()
+        calendarStart.time = simpleDateFormat.parse(dateEvent.start)
+        calendarEnd.time = simpleDateFormat.parse(dateEvent.end)
         return DateEventModel(
-            simpleDateFormat.parse(dateEvent.start),
-            simpleDateFormat.parse(dateEvent.end)
+            calendarStart,
+            calendarEnd
         )
     }
 

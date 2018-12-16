@@ -8,6 +8,7 @@ import com.alxminyaev.eventlist.R
 import com.alxminyaev.eventlist.feature.BaseActivity
 import com.alxminyaev.eventlist.feature.MvpPresenter
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
+import com.alxminyaev.eventlist.feature.memberlist.presentation.MemberListActivity
 
 class EventTableActivity : BaseActivity<EventTableView>(), EventTableView {
 
@@ -29,7 +30,11 @@ class EventTableActivity : BaseActivity<EventTableView>(), EventTableView {
         recycleView = findViewById(R.id.event_recycle_view)
 
         recycleView.layoutManager = LinearLayoutManager(this)
-        recyclerViewAdapter = EventTableAdapter(this)
+        recyclerViewAdapter = EventTableAdapter(this, object : EventTableAdapter.SelectEventListener {
+            override fun OnEventSelect(event: EventModel) {
+                MemberListActivity.startMemberListActivity(this@EventTableActivity, event.id, event.title)
+            }
+        })
         recycleView.adapter = recyclerViewAdapter
     }
 

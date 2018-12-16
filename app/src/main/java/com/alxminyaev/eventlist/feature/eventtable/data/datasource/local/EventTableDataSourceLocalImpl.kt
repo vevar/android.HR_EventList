@@ -39,27 +39,12 @@ class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val 
     override fun getEventsCards(): Single<List<TheEventCard>> {
         return eventDao.getAll()
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .map { list ->
-                list.map {
+                list.map { it ->
                     val citesIDs: List<Int> = it.citesId
                     val cites: MutableList<CityEntity> = mutableListOf()
                     for (id in citesIDs) {
-                        cityDao.getCityById(id).subscribe(object : MaybeObserver<CityEntity> {
-                            override fun onSuccess(cityEntity: CityEntity) {
-                                cites.add(cityEntity)
-                            }
-
-                            override fun onComplete() {
-                            }
-
-                            override fun onSubscribe(d: Disposable) {
-                            }
-
-                            override fun onError(e: Throwable) {
-                            }
-
-                        })
+                        cityDao.getCityById(id).subscribe { city -> cites.add(city) }
                     }
                     convertEventFrom(it, cites)
                 }

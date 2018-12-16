@@ -1,7 +1,5 @@
 package com.alxminyaev.eventlist.network
 
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,6 +8,8 @@ class RetrofitProvider {
 
     companion object {
         private const val BASE_URL = "https://beta-team.cft.ru/"
+
+        private const val TOKEN = "cftteamtest2018"
     }
 
     private var retrofit: Retrofit
@@ -20,17 +20,6 @@ class RetrofitProvider {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
-    }
-
-    private fun createClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-
-        val logInterceptor = HttpLoggingInterceptor()
-        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        builder.addInterceptor(logInterceptor)
-
-        return builder.build()
     }
 
     fun getRetrofit(): Retrofit {
