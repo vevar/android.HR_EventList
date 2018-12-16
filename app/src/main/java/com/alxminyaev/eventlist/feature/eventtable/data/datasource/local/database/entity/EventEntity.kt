@@ -6,7 +6,12 @@ import com.google.gson.reflect.TypeToken
 
 
 @Entity(
-    tableName = EventEntity.TABLE_NAME
+    tableName = EventEntity.TABLE_NAME,
+    foreignKeys = [ForeignKey(
+        entity = CityEntity::class,
+        parentColumns = arrayOf("uid"),
+        childColumns = arrayOf("cites_id")
+    )]
 )
 @TypeConverters(EventEntity.Converter::class)
 data class EventEntity(

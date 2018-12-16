@@ -6,6 +6,7 @@ import com.alxminyaev.eventlist.feature.eventtable.data.datasource.remote.EventT
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.CityModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.DateEventModel
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
+import io.reactivex.Observable
 import io.reactivex.Single
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,6 +15,24 @@ class EventTableRepositoryImpl(
     private val dataSourceRemote: EventTableRemoteDataSource,
     private val dataSourceLocal: EventTableLocalDataSource
 ) : EventTableRepository {
+
+    override fun loadEvents(): Observable<List<EventModel>> {
+        return dataSourceLocal.getEventsCards()
+            .mergeWith(getFromRemote())
+            .map{ list ->
+                list.map {
+                    convertEventFrom(it)
+                }
+            }.toObservable()
+
+    }
+
+    private fun getFromRemote(): Single<List<TheEventCard>> {
+        return dataSourceRemote.getEventsCards()
+            .flatMap {
+                dataSourceLocal.saveAll(it)
+            }
+    }
 
     override fun saveAllToLocal(single: Single<List<EventModel>>) {
         dataSourceLocal.saveAll(single.map { list ->

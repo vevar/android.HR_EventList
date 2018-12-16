@@ -16,9 +16,11 @@ import io.reactivex.schedulers.Schedulers
 class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val cityDao: CityDao) :
     EventTableLocalDataSource {
 
-    override fun saveAll(single: Single<List<TheEventCard>>) {
-        val disposable = single.map { list ->
-            list.map { theEvent ->
+    override fun saveAll(list: List<TheEventCard>): Single<List<TheEventCard>> {
+
+        val singleListEvents = Single.just(list)
+        val disposableListEvent = singleListEvents.map { listEvent ->
+            listEvent.map { theEvent ->
                 val cites = theEvent.cities.map { theCity ->
                     convertCityFrom(theCity)
                 }
@@ -26,12 +28,12 @@ class EventTableDataSourceLocalImpl(private val eventDao: EventDao, private val 
                     .toList()
                     .subscribeOn(Schedulers.io())
                     .subscribe(Consumer { cityDao.saveAll(it) })
-
                 convertEventFrom(theEvent, cites.map { it.uid })
             }
         }
             .subscribeOn(Schedulers.io())
             .subscribe(Consumer { eventDao.insertAll(it) })
+        return singleListEvents
     }
 
     override fun getEventsCards(): Single<List<TheEventCard>> {

@@ -7,5 +7,5 @@ interface EventTableLocalDataSource {
 
     fun getEventsCards(): Single<List<TheEventCard>>
 
-    fun saveAll(single: Single<List<TheEventCard>>)
+    fun saveAll(list: List<TheEventCard>): Single<List<TheEventCard>>
 }

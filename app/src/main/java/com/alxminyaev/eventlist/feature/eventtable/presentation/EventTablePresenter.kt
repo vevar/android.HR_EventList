@@ -4,7 +4,9 @@ import com.alxminyaev.eventlist.feature.MvpPresenter
 import com.alxminyaev.eventlist.feature.eventtable.domain.EventTableInteractor
 import com.alxminyaev.eventlist.feature.eventtable.domain.model.EventModel
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPresenter<EventTableView>(),
     Observer<List<EventModel>> {
@@ -35,7 +37,10 @@ class EventTablePresenter(private val interactor: EventTableInteractor) : MvpPre
 
     private fun loadEventTable() {
         view?.showProgressBar()
-        interactor.loadEvents(this)
+        val dsi = interactor.loadEvents()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {})
+
 
 
     }

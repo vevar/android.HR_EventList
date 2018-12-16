@@ -8,29 +8,8 @@ import io.reactivex.disposables.Disposable
 
 class EventTableInteractorImpl(private val repository: EventTableRepository) : EventTableInteractor {
 
-    override fun loadEvents(observer: Observer<List<EventModel>>) {
-        val observable = repository.loadEventsFromRemote().toObservable()
-        observable.subscribe(object : Observer<List<EventModel>>{
-            override fun onComplete() {
-            }
-
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onNext(list: List<EventModel>) {
-                val observableEvents = Observable.fromIterable(list).toList()
-                repository.saveAllToLocal(observableEvents)
-                observable.subscribe(observer)
-            }
-
-            override fun onError(e: Throwable) {
-                repository.loadEventsFromLocal().toObservable().subscribe(observer)
-            }
-
-
-        })
-
-
+    override fun loadEvents(): Observable<List<EventModel>> {
+        return repository.loadEvents()
     }
 
 
