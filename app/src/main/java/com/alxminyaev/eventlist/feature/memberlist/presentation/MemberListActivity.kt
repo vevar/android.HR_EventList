@@ -30,7 +30,7 @@ class MemberListActivity : BaseActivity<MemberListView>(), MemberListView {
 
         private const val EXTRA_EVENT_ID: String = "com.alxminyaev.eventlist.feature.memberlist.presentation_event_id"
         private const val EXTRA_EVENT_TITLE: String =
-            "com.alxminyaev.eventlist.feature.memberlist.presentation_event_title"
+            "com.alxminyaev.eventlist.feature.memberlist.presentation_title_event"
 
         fun startMemberListActivity(activity: BaseActivity<EventTableView>, eventId: Int, eventTitle: String) {
             val intentToStartActivity = Intent(activity, MemberListActivity::class.java)
